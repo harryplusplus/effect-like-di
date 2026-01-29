@@ -214,6 +214,8 @@ See the [examples](https://github.com/harryplusplus/unlayer/tree/main/examples) 
 - [transient-scope.ts](https://github.com/harryplusplus/unlayer/tree/main/examples/transient-scope.ts) - Singleton vs transient scope
 - [resource-disposal.ts](https://github.com/harryplusplus/unlayer/tree/main/examples/resource-disposal.ts) - Resource cleanup
 - [layer-composition.ts](https://github.com/harryplusplus/unlayer/tree/main/examples/layer-composition.ts) - Layer composition patterns
+- [type-safe-composition.ts](https://github.com/harryplusplus/unlayer/tree/main/examples/type-safe-composition.ts) - Type-safe Layer<Out, In> composition
+- [type-check.ts](https://github.com/harryplusplus/unlayer/tree/main/examples/type-check.ts) - Compile-time type safety verification
 
 Run examples with:
 ```bash
