@@ -123,21 +123,26 @@ codebase를 사용해 찾아봅니다.
 
 ### 검증하기
 
+검증하기를 설명하기에 앞서 중요한 내용을 먼저 공유합니다.
+**모든 각 명령줄은 성공 종료해야 합니다.**
+임의로 판단하지 않습니다.
+**`eslint-disable`을 사용하지 않습니다.**
+어떻게 해야할지 모르겠으면 물어보세요. 성심성의껏 도와드립니다.
 #### 소스 파일 검사
 
 각 소스 파일을 작성한 후 아래 명령어를 사용해 1차적으로 작업을 검증합니다.
-lint는 포매터를 포함하고 있습니다.
+lint는 prettier 포매터를 포함하고 있습니다.
 lint와 싸우지 마세요.
 특히 lint 룰 중 파일 라인수 300 제한, 함수 라인수 50 제한이 있습니다.
 이는 작업자가 코드 보기 및 검색하기를 쉽게 만들어줍니다.
 이 검사가 성공적이면 테스트 작성 단계로 넘어갑니다.
 
 ```bash
-# lint 검사 및 자동 format
+# lint 검사 및 prettier formatting
 pnpm eslint --fix <file_path>
 
 # 타입 유효성 검사
-pnpm tsc
+pnpm tsc --noEmit
 ```
 
 #### 테스트 작성
@@ -145,16 +150,32 @@ pnpm tsc
 각 소스 파일 검사가 성공적이면 테스트 파일을 `tests` 경로 하위에 작성합니다.
 소스 파일 이름과 관련있게 작성해주세요. e.g. `tests/container.test.ts`, `tests/container-resolution.test.ts`
 마찬가지로 lint 검사 및 타입 유효성 검사를 통과한 후 테스트 커버리지를 확인해주세요.
+테스트 커버리지는 100%를 달성해야 합니다.
 
 ```bash
-# lint 검사 및 자동 format
+# lint 검사 및 prettier formatting
 pnpm eslint --fix <file_path>
 
 # 타입 유효성 검사
-pnpm tsc
+pnpm tsc --noEmit
 
 # 테스트 커버리지 100% 달성 검사
-pnpm vitest --run --coverage <file_path>
+pnpm vitest --run <file_path>
 ```
 
 만약 작성한 코드가 테스트하기 어렵다면, 테스트하기 쉽도록 수정하고 다시 차례차례 검증해주세요.
+
+#### 프로젝트 검증
+
+각 소스 및 테스트 파일이 검증에 통과하더라도 프로젝트 단위로 확인을 해야 합니다.
+
+```bash
+# 프로젝트 전체 lint 검사 및 prettier formatting
+pnpm eslint --fix .
+
+# 프로젝트 전체 타입 유효성 검사
+pnpm tsc --noEmit
+
+# 프로젝트 전체 테스트 검사
+pnpm vitest --run .
+```
