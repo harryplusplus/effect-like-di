@@ -12,7 +12,14 @@
 
     // Types
     "skipLibCheck": true,
-    "strict": true
+    "strict": true,
+
+    // Builds
+    "outDir": "dist",
+    "incremental": true,
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true
   },
   "include": [
     "src/**/*.ts",
