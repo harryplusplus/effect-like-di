@@ -107,6 +107,11 @@ codebase search "translator" --top-k 10
 
 ## 작업 루틴
 
+작업 루틴은 계획하기, 작성하기, 검증하기 단계로 구성됩니다.
+작성하기 및 검증하기 단계 도중 재계획이 필요하면 다시 계획하세요.
+그리고 다시 작성하고 검증하세요.
+완료될 때까지 반복하세요.
+
 ### 계획하기
 
 계획을 진행하며 유사한 코드가 있는지 확인합니다.
@@ -165,9 +170,9 @@ pnpm tsc --noEmit
 pnpm vitest --run <file_path>
 ```
 
-아래는 예제 커버리지 결과표입니다.
+아래는 커버리지 결과표 예시입니다.
 커버리지를 통과하지 못한 것은 `Uncovered Line` 항목을 보면 알 수 있습니다.
-예를 들어, `index.ts`의 경우 `% Stmts`, `% Branch`, `% Funcs`, `% Lines`의 값이 0으로 나옵니다.
+예를 들어, `index.ts`의 경우 `Stmts`, `Branch`, `Funcs`, `Lines`의 값이 0으로 나옵니다.
 그리고 `Uncovered Lines`이 비어있습니다.
 이 케이스는 통과한 것입니다.
 함수나 클래스같은 구현이 없기 때문입니다.
@@ -221,4 +226,3 @@ pnpm tsc --noEmit
 # 프로젝트 전체 테스트 검사
 pnpm vitest --run .
 ```
-
