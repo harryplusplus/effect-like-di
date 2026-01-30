@@ -55,15 +55,10 @@ export function createContainer<Services>(
   }
 
   const services = new Map<string, ServiceDefinition>()
-  const singletons = new Map<string, unknown>()
 
   return {
     get<T extends Services>(tag: Tag<T>): T {
-      const existing = services.get(tag.name)
-      if (existing && existing.scope === 'singleton') {
-        return existing.instance as T
-      }
-      return createService(tag, services, singletons, graph) as T
+      return createService(tag, services, graph) as T
     },
 
     async dispose(): Promise<void> {
@@ -82,7 +77,6 @@ export function createContainer<Services>(
 
       await Promise.all(disposePromises)
       services.clear()
-      singletons.clear()
     },
   } as Container<Services>
 }
@@ -90,11 +84,11 @@ export function createContainer<Services>(
 function createService(
   tag: Tag<unknown>,
   services: Map<string, ServiceDefinition>,
-  singletons: Map<string, unknown>,
   graph: DependencyGraph,
 ): unknown {
-  if (singletons.has(tag.name)) {
-    return singletons.get(tag.name)
+  const existing = services.get(tag.name)
+  if (existing && existing.scope === 'singleton') {
+    return existing.instance
   }
 
   const layer = graph.layerMap.get(tag.name)
@@ -114,7 +108,7 @@ function createService(
   } else {
     // impl must be factory due to buildGraph filtering
     const dependencies = impl.dependencies.map((depTag) =>
-      createService(depTag, services, singletons, graph),
+      createService(depTag, services, graph),
     )
 
     instance = impl.factory!(...dependencies)
@@ -123,12 +117,7 @@ function createService(
     dispose = impl.options?.dispose
   }
 
-  if (scope === 'singleton') {
-    singletons.set(tag.name, instance)
-    services.set(tag.name, { tag, instance, scope, dispose })
-  } else {
-    services.set(tag.name, { tag, instance, scope, dispose })
-  }
+  services.set(tag.name, { tag, instance, scope, dispose })
 
   return instance
 }
